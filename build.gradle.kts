@@ -47,6 +47,8 @@ subprojects {
 
         "testImplementation"("org.junit.jupiter:junit-jupiter-api")
         "testImplementation"("org.junit.jupiter:junit-jupiter-params")
+        "testImplementation"("org.assertj:assertj-core")
+        "testImplementation"("org.jetbrains.kotlin:kotlin-reflect")
 
         "testRuntimeOnly"("org.junit.jupiter:junit-jupiter-engine")
     }
