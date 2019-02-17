@@ -277,33 +277,33 @@ private class DocumentationBuilder(override val identifier: String) : Documentat
         relaxed: Boolean,
         attributes: Map<String, Any?>,
         configure: ParametersScope.() -> Unit
-    ) = snippet(ParametersBuilder().apply(configure).buildPathParameters(relaxed, attributes))
+    ) = snippet(pathParametersSnippet(relaxed, attributes, configure))
 
     override fun requestParameters(
         relaxed: Boolean,
         attributes: Map<String, Any?>,
         configure: ParametersScope.() -> Unit
-    ) = snippet(ParametersBuilder().apply(configure).buildRequestParameters(relaxed, attributes))
+    ) = snippet(requestParametersSnippet(relaxed, attributes, configure))
 
     override fun requestFields(
         relaxed: Boolean,
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>,
         configure: FieldsScope.() -> Unit
-    ) = snippet(FieldsBuilder().apply(configure).buildRequestFields(relaxed, subsectionExtractor, attributes))
+    ) = snippet(requestFieldsSnippet(relaxed, subsectionExtractor, attributes, configure))
 
     override fun responseFields(
         relaxed: Boolean,
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>,
         configure: FieldsScope.() -> Unit
-    ) = snippet(FieldsBuilder().apply(configure).buildResponseFields(relaxed, subsectionExtractor, attributes))
+    ) = snippet(responseFieldsSnippet(relaxed, subsectionExtractor, attributes, configure))
 
     override fun requestParts(
         relaxed: Boolean,
         attributes: Map<String, Any?>,
         configure: RequestPartsScope.() -> Unit
-    ) = snippet(RequestPartsBuilder().apply(configure).build(relaxed, attributes))
+    ) = snippet(requestPartsSnippet(relaxed, attributes, configure))
 
     override fun requestPartFields(
         part: String,
@@ -311,7 +311,7 @@ private class DocumentationBuilder(override val identifier: String) : Documentat
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>,
         configure: FieldsScope.() -> Unit
-    ) = snippet(FieldsBuilder().apply(configure).buildRequestPartFields(part, relaxed, subsectionExtractor, attributes))
+    ) = snippet(requestPartFieldsSnippet(part, relaxed, subsectionExtractor, attributes, configure))
 
     override fun requestBody(
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
@@ -332,19 +332,19 @@ private class DocumentationBuilder(override val identifier: String) : Documentat
     override fun requestHeaders(
         attributes: Map<String, Any?>,
         configure: HeadersScope.() -> Unit
-    ) = snippet(HeadersBuilder().apply(configure).buildRequestHeaders(attributes))
+    ) = snippet(requestHeadersSnippet(attributes, configure))
 
     override fun responseHeaders(
         attributes: Map<String, Any?>,
         configure: HeadersScope.() -> Unit
-    ) = snippet(HeadersBuilder().apply(configure).buildResponseHeaders(attributes))
+    ) = snippet(responseHeadersSnippet(attributes, configure))
 
     override fun links(
         relaxed: Boolean,
         linkExtractor: LinkExtractor?,
         attributes: Map<String, Any?>,
         configure: LinksScope.() -> Unit
-    ) = snippet(LinksBuilder().apply(configure).build(relaxed, linkExtractor, attributes))
+    ) = snippet(linksSnippet(relaxed, linkExtractor, attributes, configure))
 }
 
 interface ParametersScope {
