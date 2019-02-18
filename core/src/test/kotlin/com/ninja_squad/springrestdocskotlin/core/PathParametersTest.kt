@@ -16,7 +16,7 @@ class PathParametersTest {
         val snippet = pathParametersSnippet {
         }
 
-        assertThat(snippet.attributes).isEmpty()
+        assertThat(snippet.attributeMap).isEmpty()
         assertThat(snippet.relaxed).isFalse()
     }
 
@@ -25,7 +25,7 @@ class PathParametersTest {
         val snippet = pathParametersSnippet(attributes = mapOf("foo" to "bar")) {
         }
 
-        assertThat(snippet.attributes).containsOnly(entry("foo", "bar"))
+        assertThat(snippet.attributeMap).containsOnly(entry("foo", "bar"))
     }
 
     @Test
@@ -100,7 +100,7 @@ class PathParametersTest {
 
         snippet as PathParametersSnippet
         assertThat(snippet.relaxed).isTrue()
-        assertThat(snippet.attributes).containsOnly(entry("name", "value"))
+        assertThat(snippet.attributeMap).containsOnly(entry("name", "value"))
         assertThat(snippet.descriptors).hasSize(1)
     }
 }

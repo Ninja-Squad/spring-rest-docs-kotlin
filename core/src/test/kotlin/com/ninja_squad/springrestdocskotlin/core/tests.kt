@@ -4,7 +4,8 @@ import org.springframework.restdocs.request.AbstractParametersSnippet
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.snippet.TemplatedSnippet
 
-val TemplatedSnippet.attributes: Map<String, Any?>
+@Suppress("UNCHECKED_CAST")
+val TemplatedSnippet.attributeMap: Map<String, Any?>
     get() = TemplatedSnippet::class.java.declaredFields
         .find { it.name == "attributes" }!!
         .apply { isAccessible = true }
@@ -16,6 +17,7 @@ val AbstractParametersSnippet.relaxed: Boolean
         .apply { isAccessible = true }
         .get(this) as Boolean
 
+@Suppress("UNCHECKED_CAST")
 val AbstractParametersSnippet.descriptors: Map<String, ParameterDescriptor>
     get() = AbstractParametersSnippet::class.java.declaredMethods
         .find { it.name == "getParameterDescriptors" }!!

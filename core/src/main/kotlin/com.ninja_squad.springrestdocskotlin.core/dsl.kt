@@ -264,8 +264,10 @@ fun documentationScope(identifier: String): DocumentationScope
 private class DocumentationBuilder(override val identifier: String) : DocumentationScope {
 
     override var requestPreprocessor: OperationRequestPreprocessor? = null
+
     override var responsePreprocessor: OperationResponsePreprocessor? = null
-    val mutableSnippets = mutableListOf<Snippet>()
+
+    private val mutableSnippets = mutableListOf<Snippet>()
     override val snippets: List<Snippet>
         get() = mutableSnippets
 
