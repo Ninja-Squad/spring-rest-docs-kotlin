@@ -17,7 +17,7 @@ class WebTestClientExampleTest(val webTestClient: WebTestClient) {
         add(HttpHeaders.AUTHORIZATION, "the basic auth authorization header")
     }
 
-    fun `should search`() {
+    fun `should get user`() {
         webTestClient.get().uri("/users?page=1&query=john").exchange()
             .expectStatus().isOk()
             .expectBody()
@@ -27,9 +27,8 @@ class WebTestClientExampleTest(val webTestClient: WebTestClient) {
             .andDocument("users/search") {
                 snippet(reusableHeadersSnippet)
 
-                requestParameters {
-                    add("query", "The full-text query, case-insensitive")
-                    add("page", "the page number, starting at 0", optional = true)
+                pathParameters {
+                    add("userUd", "The ID of the user to get")
                 }
 
                 responseFields {
@@ -40,10 +39,6 @@ class WebTestClientExampleTest(val webTestClient: WebTestClient) {
                         add("street", "the street")
                         add("country", "the ISO country code")
                     }
-                }
-
-                links(relaxed = true) {
-                    add("next", "the link to the next page, if any", optional = true)
                 }
             }
     }

@@ -22,16 +22,15 @@ class RestAssuredExampleTest {
     // How this variable is initialized is not the point of this example
     private lateinit var spec: RequestSpecification
 
-    fun `should search`() {
+    fun `should get user`() {
         // andDocument is easier to type and read than .filter(document(...))
         // and it takes a DocumentationScope extension function as argument, providing
         // easy, scoped access to several methods (snippet, requestParameters, etc.)
-        RestAssured.given(spec).andDocument("users/search") {
+        RestAssured.given(spec).andDocument("users/get") {
             snippet(reusableHeadersSnippet)
 
-            requestParameters {
-                add("query", "The full-text query, case-insensitive")
-                add("page", "the page number, starting at 0", optional = true)
+            pathParameters {
+                add("userId", "The ID of the user to get")
             }
 
             responseFields {
@@ -43,10 +42,6 @@ class RestAssuredExampleTest {
                     add("country", "the ISO country code")
                 }
             }
-
-            links(relaxed = true) {
-                add("next", "the link to the next page, if any", optional = true)
-            }
-        }.get("/users?page=1&query=john").then().assertThat().statusCode(200)
+        }.get("/users/42").then().assertThat().statusCode(200)
     }
 }
