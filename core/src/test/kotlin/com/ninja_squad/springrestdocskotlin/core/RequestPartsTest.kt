@@ -1,6 +1,6 @@
 package com.ninja_squad.springrestdocskotlin.core
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.springframework.restdocs.request.RequestPartsSnippet
@@ -16,8 +16,8 @@ class RequestPartsTest {
         val snippet = requestPartsSnippet {
         }
 
-        Assertions.assertThat(snippet.attributeMap).isEmpty()
-        Assertions.assertThat(snippet.relaxed).isFalse()
+        assertThat(snippet.attributeMap).isEmpty()
+        assertThat(snippet.relaxed).isFalse()
     }
 
     @Test
@@ -25,7 +25,7 @@ class RequestPartsTest {
         val snippet = requestPartsSnippet(attributes = mapOf("foo" to "bar")) {
         }
 
-        Assertions.assertThat(snippet.attributeMap).containsOnly(entry("foo", "bar"))
+        assertThat(snippet.attributeMap).containsOnly(entry("foo", "bar"))
     }
 
     @Test
@@ -33,21 +33,21 @@ class RequestPartsTest {
         val snippet = requestPartsSnippet(relaxed = true) {
         }
 
-        Assertions.assertThat(snippet.relaxed).isTrue()
+        assertThat(snippet.relaxed).isTrue()
     }
 
     @Test
     fun `should add non-optional, non-ignored, no-attribute part by default`() {
         val snippet = requestPartsSnippet {
-            add(requestPart("foo", "bar"))
+            add("foo", "bar")
         }
 
-        Assertions.assertThat(snippet.descriptors).hasSize(1)
+        assertThat(snippet.descriptors).hasSize(1)
         val descriptor = snippet.descriptors["foo"]
-        Assertions.assertThat(descriptor?.description).isEqualTo("bar")
-        Assertions.assertThat(descriptor?.isOptional).isFalse()
-        Assertions.assertThat(descriptor?.isIgnored).isFalse()
-        Assertions.assertThat(descriptor?.attributes).isEmpty()
+        assertThat(descriptor?.description).isEqualTo("bar")
+        assertThat(descriptor?.isOptional).isFalse()
+        assertThat(descriptor?.isIgnored).isFalse()
+        assertThat(descriptor?.attributes).isEmpty()
     }
 
     @Test
@@ -56,7 +56,7 @@ class RequestPartsTest {
             add("foo", "bar", optional = true)
         }
 
-        Assertions.assertThat(snippet.descriptors["foo"]?.isOptional).isTrue()
+        assertThat(snippet.descriptors["foo"]?.isOptional).isTrue()
     }
 
     @Test
@@ -66,8 +66,8 @@ class RequestPartsTest {
         }
 
         val descriptor = snippet.descriptors["foo"]
-        Assertions.assertThat(descriptor?.isIgnored).isTrue()
-        Assertions.assertThat(descriptor?.description).isNull()
+        assertThat(descriptor?.isIgnored).isTrue()
+        assertThat(descriptor?.description).isNull()
     }
 
     @Test
@@ -76,7 +76,7 @@ class RequestPartsTest {
             add("foo", "bar", attributes = mapOf("name" to "value"))
         }
 
-        Assertions.assertThat(snippet.descriptors["foo"]?.attributes).containsOnly(entry("name", "value"))
+        assertThat(snippet.descriptors["foo"]?.attributes).containsOnly(entry("name", "value"))
     }
 
     @Test
@@ -85,7 +85,7 @@ class RequestPartsTest {
         documentationScope.requestParts {
         }
 
-        Assertions.assertThat(documentationScope.snippets.first()).isInstanceOf(RequestPartsSnippet::class.java)
+        assertThat(documentationScope.snippets.first()).isInstanceOf(RequestPartsSnippet::class.java)
     }
 
     @Test
@@ -96,11 +96,11 @@ class RequestPartsTest {
         }
 
         val snippet = documentationScope.snippets.first()
-        Assertions.assertThat(snippet).isInstanceOf(RequestPartsSnippet::class.java)
+        assertThat(snippet).isInstanceOf(RequestPartsSnippet::class.java)
 
         snippet as RequestPartsSnippet
-        Assertions.assertThat(snippet.relaxed).isTrue()
-        Assertions.assertThat(snippet.attributeMap).containsOnly(entry("name", "value"))
-        Assertions.assertThat(snippet.descriptors).hasSize(1)
+        assertThat(snippet.relaxed).isTrue()
+        assertThat(snippet.attributeMap).containsOnly(entry("name", "value"))
+        assertThat(snippet.descriptors).hasSize(1)
     }
 }

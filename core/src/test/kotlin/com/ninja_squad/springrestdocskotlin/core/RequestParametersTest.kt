@@ -39,7 +39,7 @@ class RequestParametersTest {
     @Test
     fun `should add non-optional, non-ignored, no-attribute parameter by default`() {
         val snippet = requestParametersSnippet {
-            add(parameter("foo", "bar"))
+            add("foo", "bar")
         }
 
         assertThat(snippet.descriptors).hasSize(1)
