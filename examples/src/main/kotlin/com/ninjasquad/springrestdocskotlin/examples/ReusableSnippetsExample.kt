@@ -1,6 +1,7 @@
 package com.ninjasquad.springrestdocskotlin.examples
 
-import com.ninjasquad.springrestdocskotlin.core.*
+import com.ninjasquad.springrestdocskotlin.core.Descriptors
+import com.ninjasquad.springrestdocskotlin.core.Snippets
 import org.springframework.http.HttpHeaders
 import org.springframework.restdocs.payload.PayloadDocumentation.beneathPath
 import org.springframework.restdocs.payload.ResponseFieldsSnippet
@@ -9,7 +10,7 @@ import org.springframework.restdocs.request.RequestParametersSnippet
 /**
  * A reusable request parameters snippet.
  */
-val exampleParameters: RequestParametersSnippet = requestParametersSnippet {
+val exampleParameters: RequestParametersSnippet = Snippets.requestParameters {
     // positional
     add("page", "the page to retrieve (starts at 0)")
 
@@ -26,7 +27,7 @@ val exampleParameters: RequestParametersSnippet = requestParametersSnippet {
 /**
  * A reusable response fields snippet, relaxed, for the fields under the path "body".
  */
-val exampleFields: ResponseFieldsSnippet = responseFieldsSnippet(
+val exampleFields: ResponseFieldsSnippet = Snippets.responseFields(
     relaxed = true,
     subsectionExtractor = beneathPath("body")
 ) {
@@ -43,29 +44,30 @@ val exampleFields: ResponseFieldsSnippet = responseFieldsSnippet(
     add("lastName", "The last name of the user", attributes = mapOf("key" to "value"))
 
     // subsection
-    subsection("security", "The security-related properties of the user")
+    addSubsection("security", "The security-related properties of the user")
 
     // nested
     withPrefix("address.") {
         add("street", "The street")
         add("country", "The country", optional = true)
     }
-}.andWithPrefix("coordinates",
-    field("latitude", "The latitude of the main location of the user"),
-    field("longitude", "The longitude of the main location of the user")
+}.andWithPrefix(
+    "coordinates",
+    Descriptors.field("latitude", "The latitude of the main location of the user"),
+    Descriptors.field("longitude", "The longitude of the main location of the user")
 )
 
 /**
  * A reusable request parts snippet
  */
-val exampleRequestParts = requestPartsSnippet {
+val exampleRequestParts = Snippets.requestParts {
     add("file", "The uploaded file", optional = true)
 }
 
 /**
  * A reusable headers snippet
  */
-val exampleHeaders = requestHeadersSnippet {
+val exampleHeaders = Snippets.requestHeaders {
     add(HttpHeaders.AUTHORIZATION, "The JSON Web Token prefixed with `Bearer `", optional = true)
 }
 

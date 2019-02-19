@@ -1,5 +1,6 @@
 package com.ninjasquad.springrestdocskotlin.core
 
+import com.ninjasquad.springrestdocskotlin.core.Snippets.requestParameters
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
@@ -13,7 +14,7 @@ class RequestParametersTest {
 
     @Test
     fun `should create a non-relaxed snippet without attributes by default`() {
-        val snippet = requestParametersSnippet {
+        val snippet = requestParameters {
         }
 
         assertThat(snippet.attributeMap).isEmpty()
@@ -22,7 +23,7 @@ class RequestParametersTest {
 
     @Test
     fun `should create snippet with attributes`() {
-        val snippet = requestParametersSnippet(attributes = mapOf("foo" to "bar")) {
+        val snippet = requestParameters(attributes = mapOf("foo" to "bar")) {
         }
 
         assertThat(snippet.attributeMap).containsOnly(entry("foo", "bar"))
@@ -30,7 +31,7 @@ class RequestParametersTest {
 
     @Test
     fun `should create relaxed snippet`() {
-        val snippet = requestParametersSnippet(relaxed = true) {
+        val snippet = requestParameters(relaxed = true) {
         }
 
         assertThat(snippet.relaxed).isTrue()
@@ -38,7 +39,7 @@ class RequestParametersTest {
 
     @Test
     fun `should add non-optional, non-ignored, no-attribute parameter by default`() {
-        val snippet = requestParametersSnippet {
+        val snippet = requestParameters {
             add("foo", "bar")
         }
 
@@ -52,7 +53,7 @@ class RequestParametersTest {
 
     @Test
     fun `should add optional parameter`() {
-        val snippet = requestParametersSnippet {
+        val snippet = requestParameters {
             add("foo", "bar", optional = true)
         }
 
@@ -61,7 +62,7 @@ class RequestParametersTest {
 
     @Test
     fun `should add ignored parameter`() {
-        val snippet = requestParametersSnippet {
+        val snippet = requestParameters {
             add("foo", ignored = true)
         }
 
@@ -72,7 +73,7 @@ class RequestParametersTest {
 
     @Test
     fun `should add parameter with attributes`() {
-        val snippet = requestParametersSnippet {
+        val snippet = requestParameters {
             add("foo", "bar", attributes = mapOf("name" to "value"))
         }
 

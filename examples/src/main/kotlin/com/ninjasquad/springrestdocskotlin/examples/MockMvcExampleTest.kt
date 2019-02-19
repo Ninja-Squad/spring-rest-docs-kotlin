@@ -1,7 +1,6 @@
 package com.ninjasquad.springrestdocskotlin.examples
 
-import com.ninjasquad.springrestdocskotlin.core.requestHeadersSnippet
-import com.ninjasquad.springrestdocskotlin.core.subsection
+import com.ninjasquad.springrestdocskotlin.core.Snippets
 import com.ninjasquad.springrestdocskotlin.mockmvc.andDocument
 import com.ninjasquad.springrestdocskotlin.mockmvc.docGet
 import org.springframework.http.HttpHeaders
@@ -16,7 +15,7 @@ class MockMvcExampleTest(val mockMvc: MockMvc) {
     /**
      * This snippet can be reused in several test methods
      */
-    val reusableHeadersSnippet = requestHeadersSnippet {
+    val reusableHeadersSnippet = Snippets.requestHeaders {
         add(HttpHeaders.AUTHORIZATION, "the basic auth authorization header")
     }
 
@@ -37,7 +36,7 @@ class MockMvcExampleTest(val mockMvc: MockMvc) {
 
                 responseFields {
                     add("firstName", "the first name of the user")
-                    subsection("coordinates", "the geo-coordinates of the main location of the user")
+                    addSubsection("coordinates", "the geo-coordinates of the main location of the user")
                     add("address", "the main address of the user")
                     withPrefix("address.") {
                         add("street", "the street")

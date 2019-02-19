@@ -1,7 +1,6 @@
 package com.ninjasquad.springrestdocskotlin.examples
 
-import com.ninjasquad.springrestdocskotlin.core.requestHeadersSnippet
-import com.ninjasquad.springrestdocskotlin.core.subsection
+import com.ninjasquad.springrestdocskotlin.core.Snippets
 import com.ninjasquad.springrestdocskotlin.webtestclient.andDocument
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -13,7 +12,7 @@ class WebTestClientExampleTest(val webTestClient: WebTestClient) {
     /**
      * This snippet can be reused in several test methods
      */
-    val reusableHeadersSnippet = requestHeadersSnippet {
+    val reusableHeadersSnippet = Snippets.requestHeaders {
         add(HttpHeaders.AUTHORIZATION, "the basic auth authorization header")
     }
 
@@ -33,7 +32,7 @@ class WebTestClientExampleTest(val webTestClient: WebTestClient) {
 
                 responseFields {
                     add("firstName", "the first name of the user")
-                    subsection("coordinates", "the geo-coordinates of the main location of the user")
+                    addSubsection("coordinates", "the geo-coordinates of the main location of the user")
                     add("address", "the main address of the user")
                     withPrefix("address.") {
                         add("street", "the street")

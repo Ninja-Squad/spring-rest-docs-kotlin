@@ -1,5 +1,6 @@
 package com.ninjasquad.springrestdocskotlin.core
 
+import com.ninjasquad.springrestdocskotlin.core.Snippets.requestFields
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
@@ -16,7 +17,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should create a non-relaxed snippet without attributes, without subsection extractor by default`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
         }
 
         assertThat(snippet.attributeMap).isEmpty()
@@ -27,7 +28,7 @@ class RequestFieldsTest {
     @Test
     fun `should create snippet with subsection extractor`() {
         val subsectionExtractor = beneathPath("body")
-        val snippet = requestFieldsSnippet(subsectionExtractor = subsectionExtractor) {
+        val snippet = requestFields(subsectionExtractor = subsectionExtractor) {
         }
 
         assertThat(snippet.payloadSubsectionExtractor).isSameAs(subsectionExtractor)
@@ -35,7 +36,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should create snippet with attributes`() {
-        val snippet = requestFieldsSnippet(attributes = mapOf("foo" to "bar")) {
+        val snippet = requestFields(attributes = mapOf("foo" to "bar")) {
         }
 
         assertThat(snippet.attributeMap).containsOnly(entry("foo", "bar"))
@@ -43,7 +44,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should create relaxed snippet`() {
-        val snippet = requestFieldsSnippet(relaxed = true) {
+        val snippet = requestFields(relaxed = true) {
         }
 
         assertThat(snippet.relaxed).isTrue()
@@ -51,7 +52,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add non-optional, non-ignored, not typed, no-attribute field by default`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             add("foo", "bar")
         }
 
@@ -67,7 +68,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add optional field`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             add("foo", "bar", optional = true)
         }
 
@@ -76,7 +77,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add ignored field`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             add("foo", ignored = true)
         }
 
@@ -87,7 +88,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add typed field`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             add("foo", "bar", type = JsonFieldType.NUMBER)
         }
 
@@ -97,7 +98,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add field with attributes`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             add("foo", "bar", attributes = mapOf("name" to "value"))
         }
 
@@ -106,7 +107,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add field with prefix`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             withPrefix("user.") {
                 add("name", "the user name")
             }
@@ -119,7 +120,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add non-optional, non-ignored, not typed, no-attribute subsection by default`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             addSubsection("foo", "bar")
         }
 
@@ -136,7 +137,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add optional subsection`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             addSubsection("foo", "bar", optional = true)
         }
 
@@ -145,7 +146,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add ignored subsection`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             addSubsection("foo", ignored = true)
         }
 
@@ -156,7 +157,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add typed subsection`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             addSubsection("foo", "bar", type = "geocoordinates")
         }
 
@@ -166,7 +167,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add subsection with attributes`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             addSubsection("foo", "bar", attributes = mapOf("name" to "value"))
         }
 
@@ -175,7 +176,7 @@ class RequestFieldsTest {
 
     @Test
     fun `should add subsection with prefix`() {
-        val snippet = requestFieldsSnippet {
+        val snippet = requestFields {
             withPrefix("user.") {
                 addSubsection("location", "the user location")
             }

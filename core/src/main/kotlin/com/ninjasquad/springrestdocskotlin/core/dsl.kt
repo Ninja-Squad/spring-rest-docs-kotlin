@@ -15,166 +15,170 @@ import org.springframework.restdocs.request.*
 import org.springframework.restdocs.snippet.Attributes
 import org.springframework.restdocs.snippet.Snippet
 
-fun pathParametersSnippet(
-    relaxed: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: ParametersScope.() -> Unit
-): PathParametersSnippet = ParametersBuilder().apply(configure).buildPathParameters(relaxed, attributes)
+object Snippets {
+    fun pathParameters(
+        relaxed: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: ParametersScope.() -> Unit
+    ): PathParametersSnippet = ParametersBuilder().apply(configure).buildPathParameters(relaxed, attributes)
 
-fun requestParametersSnippet(
-    relaxed: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: ParametersScope.() -> Unit
-): RequestParametersSnippet = ParametersBuilder().apply(configure).buildRequestParameters(relaxed, attributes)
+    fun requestParameters(
+        relaxed: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: ParametersScope.() -> Unit
+    ): RequestParametersSnippet = ParametersBuilder().apply(configure).buildRequestParameters(relaxed, attributes)
 
-fun requestPartsSnippet(
-    relaxed: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: RequestPartsScope.() -> Unit
-): RequestPartsSnippet = RequestPartsBuilder().apply(configure).build(relaxed, attributes)
+    fun requestParts(
+        relaxed: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: RequestPartsScope.() -> Unit
+    ): RequestPartsSnippet = RequestPartsBuilder().apply(configure).build(relaxed, attributes)
 
-fun requestFieldsSnippet(
-    relaxed: Boolean = false,
-    subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: FieldsScope.() -> Unit
-): RequestFieldsSnippet = FieldsBuilder().apply(configure).buildRequestFields(relaxed, subsectionExtractor, attributes)
+    fun requestFields(
+        relaxed: Boolean = false,
+        subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: FieldsScope.() -> Unit
+    ): RequestFieldsSnippet = FieldsBuilder().apply(configure).buildRequestFields(relaxed, subsectionExtractor, attributes)
 
-fun responseFieldsSnippet(
-    relaxed: Boolean = false,
-    subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: FieldsScope.() -> Unit
-): ResponseFieldsSnippet = FieldsBuilder().apply(configure).buildResponseFields(relaxed, subsectionExtractor, attributes)
+    fun responseFields(
+        relaxed: Boolean = false,
+        subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: FieldsScope.() -> Unit
+    ): ResponseFieldsSnippet = FieldsBuilder().apply(configure).buildResponseFields(relaxed, subsectionExtractor, attributes)
 
-fun requestPartFieldsSnippet(
-    part: String,
-    relaxed: Boolean = false,
-    subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: FieldsScope.() -> Unit
-): RequestPartFieldsSnippet = FieldsBuilder()
-    .apply(configure)
-    .buildRequestPartFields(part, relaxed, subsectionExtractor, attributes)
+    fun requestPartFields(
+        part: String,
+        relaxed: Boolean = false,
+        subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: FieldsScope.() -> Unit
+    ): RequestPartFieldsSnippet = FieldsBuilder()
+        .apply(configure)
+        .buildRequestPartFields(part, relaxed, subsectionExtractor, attributes)
 
-fun requestBodySnippet(
-    subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
-    attributes: Map<String, Any?> = emptyMap()
-) : RequestBodySnippet = PayloadDocumentation.requestBody(subsectionExtractor, attributes)
+    fun requestBody(
+        subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
+        attributes: Map<String, Any?> = emptyMap()
+    ) : RequestBodySnippet = PayloadDocumentation.requestBody(subsectionExtractor, attributes)
 
-fun responseBodySnippet(
-    subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
-    attributes: Map<String, Any?> = emptyMap()
-) : ResponseBodySnippet = PayloadDocumentation.responseBody(subsectionExtractor, attributes)
+    fun responseBody(
+        subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
+        attributes: Map<String, Any?> = emptyMap()
+    ) : ResponseBodySnippet = PayloadDocumentation.responseBody(subsectionExtractor, attributes)
 
-fun requestPartBodySnippet(
-    part: String,
-    subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
-    attributes: Map<String, Any?> = emptyMap()
-) : RequestPartBodySnippet = PayloadDocumentation.requestPartBody(part, subsectionExtractor, attributes)
+    fun requestPartBody(
+        part: String,
+        subsectionExtractor: PayloadSubsectionExtractor<*>? = null,
+        attributes: Map<String, Any?> = emptyMap()
+    ) : RequestPartBodySnippet = PayloadDocumentation.requestPartBody(part, subsectionExtractor, attributes)
 
-fun requestHeadersSnippet(
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: HeadersScope.() -> Unit
-): RequestHeadersSnippet = HeadersBuilder().apply(configure).buildRequestHeaders(attributes)
+    fun requestHeaders(
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: HeadersScope.() -> Unit
+    ): RequestHeadersSnippet = HeadersBuilder().apply(configure).buildRequestHeaders(attributes)
 
-fun responseHeadersSnippet(
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: HeadersScope.() -> Unit
-): ResponseHeadersSnippet = HeadersBuilder().apply(configure).buildResponseHeaders(attributes)
+    fun responseHeaders(
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: HeadersScope.() -> Unit
+    ): ResponseHeadersSnippet = HeadersBuilder().apply(configure).buildResponseHeaders(attributes)
 
-fun linksSnippet(
-    relaxed: Boolean = false,
-    linkExtractor: LinkExtractor? = null,
-    attributes: Map<String, Any?> = emptyMap(),
-    configure: LinksScope.() -> Unit
-): LinksSnippet = LinksBuilder().apply(configure).build(relaxed, linkExtractor, attributes)
+    fun links(
+        relaxed: Boolean = false,
+        linkExtractor: LinkExtractor? = null,
+        attributes: Map<String, Any?> = emptyMap(),
+        configure: LinksScope.() -> Unit
+    ): LinksSnippet = LinksBuilder().apply(configure).build(relaxed, linkExtractor, attributes)
+}
 
-fun parameter(
-    name: String,
-    description: String? = null,
-    optional: Boolean = false,
-    ignored: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap()
-): ParameterDescriptor = RequestDocumentation.parameterWithName(name)
-    .description(description)
-    .apply {
-        if (optional) optional()
-        if (ignored) ignored()
-    }
-    .attributes(*attributes.toAttributes())
+object Descriptors {
+    fun parameter(
+        name: String,
+        description: String? = null,
+        optional: Boolean = false,
+        ignored: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap()
+    ): ParameterDescriptor = RequestDocumentation.parameterWithName(name)
+        .description(description)
+        .apply {
+            if (optional) optional()
+            if (ignored) ignored()
+        }
+        .attributes(*attributes.toAttributes())
 
-fun requestPart(
-    name: String,
-    description: String? = null,
-    optional: Boolean = false,
-    ignored: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap()
-): RequestPartDescriptor = RequestDocumentation.partWithName(name)
-    .description(description)
-    .apply {
-        if (optional) optional()
-        if (ignored) ignored()
-    }
-    .attributes(*attributes.toAttributes())
+    fun requestPart(
+        name: String,
+        description: String? = null,
+        optional: Boolean = false,
+        ignored: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap()
+    ): RequestPartDescriptor = RequestDocumentation.partWithName(name)
+        .description(description)
+        .apply {
+            if (optional) optional()
+            if (ignored) ignored()
+        }
+        .attributes(*attributes.toAttributes())
 
-fun field(
-    path: String,
-    description: String? = null,
-    optional: Boolean = false,
-    ignored: Boolean = false,
-    type: Any? = null,
-    attributes: Map<String, Any?> = emptyMap()
-): FieldDescriptor = PayloadDocumentation.fieldWithPath(path)
-    .description(description)
-    .apply {
-        if (optional) optional()
-        if (ignored) ignored()
-    }
-    .type(type)
-    .attributes(*attributes.toAttributes())
+    fun field(
+        path: String,
+        description: String? = null,
+        optional: Boolean = false,
+        ignored: Boolean = false,
+        type: Any? = null,
+        attributes: Map<String, Any?> = emptyMap()
+    ): FieldDescriptor = PayloadDocumentation.fieldWithPath(path)
+        .description(description)
+        .apply {
+            if (optional) optional()
+            if (ignored) ignored()
+        }
+        .type(type)
+        .attributes(*attributes.toAttributes())
 
-fun subsection(
-    path: String,
-    description: String? = null,
-    optional: Boolean = false,
-    ignored: Boolean = false,
-    type: Any? = null,
-    attributes: Map<String, Any?> = emptyMap()
-): SubsectionDescriptor = PayloadDocumentation.subsectionWithPath(path)
-    .description(description)
-    .apply {
-        if (optional) optional()
-        if (ignored) ignored()
-    }
-    .type(type)
-    .attributes(*attributes.toAttributes()) as SubsectionDescriptor
+    fun subsection(
+        path: String,
+        description: String? = null,
+        optional: Boolean = false,
+        ignored: Boolean = false,
+        type: Any? = null,
+        attributes: Map<String, Any?> = emptyMap()
+    ): SubsectionDescriptor = PayloadDocumentation.subsectionWithPath(path)
+        .description(description)
+        .apply {
+            if (optional) optional()
+            if (ignored) ignored()
+        }
+        .type(type)
+        .attributes(*attributes.toAttributes()) as SubsectionDescriptor
 
-fun header(
-    name: String,
-    description: String? = null,
-    optional: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap()
-): HeaderDescriptor = HeaderDocumentation.headerWithName(name)
-    .description(description)
-    .apply {
-        if (optional) optional()
-    }
-    .attributes(*attributes.toAttributes())
+    fun header(
+        name: String,
+        description: String? = null,
+        optional: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap()
+    ): HeaderDescriptor = HeaderDocumentation.headerWithName(name)
+        .description(description)
+        .apply {
+            if (optional) optional()
+        }
+        .attributes(*attributes.toAttributes())
 
-fun link(
-    rel: String,
-    description: String? = null,
-    optional: Boolean = false,
-    ignored: Boolean = false,
-    attributes: Map<String, Any?> = emptyMap()
-): LinkDescriptor = HypermediaDocumentation.linkWithRel(rel)
-    .description(description)
-    .apply {
-        if (optional) optional()
-        if (ignored) ignored()
-    }
-    .attributes(*attributes.toAttributes())
+    fun link(
+        rel: String,
+        description: String? = null,
+        optional: Boolean = false,
+        ignored: Boolean = false,
+        attributes: Map<String, Any?> = emptyMap()
+    ): LinkDescriptor = HypermediaDocumentation.linkWithRel(rel)
+        .description(description)
+        .apply {
+            if (optional) optional()
+            if (ignored) ignored()
+        }
+        .attributes(*attributes.toAttributes())
+}
 
 interface DocumentationScope {
     val identifier: String
@@ -279,33 +283,33 @@ private class DocumentationBuilder(override val identifier: String) : Documentat
         relaxed: Boolean,
         attributes: Map<String, Any?>,
         configure: ParametersScope.() -> Unit
-    ) = snippet(pathParametersSnippet(relaxed, attributes, configure))
+    ) = snippet(Snippets.pathParameters(relaxed, attributes, configure))
 
     override fun requestParameters(
         relaxed: Boolean,
         attributes: Map<String, Any?>,
         configure: ParametersScope.() -> Unit
-    ) = snippet(requestParametersSnippet(relaxed, attributes, configure))
+    ) = snippet(Snippets.requestParameters(relaxed, attributes, configure))
 
     override fun requestFields(
         relaxed: Boolean,
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>,
         configure: FieldsScope.() -> Unit
-    ) = snippet(requestFieldsSnippet(relaxed, subsectionExtractor, attributes, configure))
+    ) = snippet(Snippets.requestFields(relaxed, subsectionExtractor, attributes, configure))
 
     override fun responseFields(
         relaxed: Boolean,
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>,
         configure: FieldsScope.() -> Unit
-    ) = snippet(responseFieldsSnippet(relaxed, subsectionExtractor, attributes, configure))
+    ) = snippet(Snippets.responseFields(relaxed, subsectionExtractor, attributes, configure))
 
     override fun requestParts(
         relaxed: Boolean,
         attributes: Map<String, Any?>,
         configure: RequestPartsScope.() -> Unit
-    ) = snippet(requestPartsSnippet(relaxed, attributes, configure))
+    ) = snippet(Snippets.requestParts(relaxed, attributes, configure))
 
     override fun requestPartFields(
         part: String,
@@ -313,40 +317,40 @@ private class DocumentationBuilder(override val identifier: String) : Documentat
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>,
         configure: FieldsScope.() -> Unit
-    ) = snippet(requestPartFieldsSnippet(part, relaxed, subsectionExtractor, attributes, configure))
+    ) = snippet(Snippets.requestPartFields(part, relaxed, subsectionExtractor, attributes, configure))
 
     override fun requestBody(
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>
-    ) = snippet(requestBodySnippet(subsectionExtractor, attributes))
+    ) = snippet(Snippets.requestBody(subsectionExtractor, attributes))
 
     override fun responseBody(
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>
-    ) = snippet(responseBodySnippet(subsectionExtractor, attributes))
+    ) = snippet(Snippets.responseBody(subsectionExtractor, attributes))
 
     override fun requestPartBody(
         part: String,
         subsectionExtractor: PayloadSubsectionExtractor<*>?,
         attributes: Map<String, Any?>
-    ) = snippet(requestPartBodySnippet(part, subsectionExtractor, attributes))
+    ) = snippet(Snippets.requestPartBody(part, subsectionExtractor, attributes))
 
     override fun requestHeaders(
         attributes: Map<String, Any?>,
         configure: HeadersScope.() -> Unit
-    ) = snippet(requestHeadersSnippet(attributes, configure))
+    ) = snippet(Snippets.requestHeaders(attributes, configure))
 
     override fun responseHeaders(
         attributes: Map<String, Any?>,
         configure: HeadersScope.() -> Unit
-    ) = snippet(responseHeadersSnippet(attributes, configure))
+    ) = snippet(Snippets.responseHeaders(attributes, configure))
 
     override fun links(
         relaxed: Boolean,
         linkExtractor: LinkExtractor?,
         attributes: Map<String, Any?>,
         configure: LinksScope.() -> Unit
-    ) = snippet(linksSnippet(relaxed, linkExtractor, attributes, configure))
+    ) = snippet(Snippets.links(relaxed, linkExtractor, attributes, configure))
 }
 
 interface ParametersScope {
@@ -371,7 +375,7 @@ private class ParametersBuilder : ParametersScope {
         ignored: Boolean,
         attributes: Map<String, Any?>
     ) = add(
-        parameter(
+        Descriptors.parameter(
             name = name,
             description = description,
             optional = optional,
@@ -422,7 +426,7 @@ private class RequestPartsBuilder : RequestPartsScope {
         ignored: Boolean,
         attributes: Map<String, Any?>
     ) = add(
-        requestPart(
+        Descriptors.requestPart(
             name = name,
             description = description,
             optional = optional,
@@ -478,7 +482,7 @@ private class FieldsBuilder : FieldsScope {
         type: Any?,
         attributes: Map<String, Any?>
     ) = add(
-        field(
+        Descriptors.field(
             path = path,
             description = description,
             optional = optional,
@@ -497,7 +501,7 @@ private class FieldsBuilder : FieldsScope {
         attributes: Map<String, Any?>
     ) {
         add(
-            subsection(
+            Descriptors.subsection(
                 path = path,
                 description = description,
                 optional = optional,
@@ -571,7 +575,7 @@ private class HeadersBuilder : HeadersScope {
         description: String?,
         optional: Boolean, attributes: Map<String, Any?>
     ) = add(
-        header(
+        Descriptors.header(
             name = name,
             description = description,
             optional = optional,
@@ -611,7 +615,7 @@ private class LinksBuilder : LinksScope {
         optional: Boolean,
         ignored: Boolean,
         attributes: Map<String, Any?>
-    ) = add(link(rel, description, optional, ignored, attributes))
+    ) = add(Descriptors.link(rel, description, optional, ignored, attributes))
 
     override fun add(linkDescriptor: LinkDescriptor) {
         links.add(linkDescriptor)
