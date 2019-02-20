@@ -8,3 +8,8 @@ dependencies {
     }
 }
 
+tasks {
+    dokka {
+        samples = listOf("src/test/kotlin/com/ninjasquad/springrestdocskotlin/webtestclient/examples.kt")
+    }
+}

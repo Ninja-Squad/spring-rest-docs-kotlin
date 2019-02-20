@@ -17,25 +17,14 @@ import org.springframework.restdocs.snippet.Attributes
  *
  * All methods take the `name`, `path` or `rel` of the descriptor to create (depending on the type) as first
  * argument, and the description as second argument. These two arguments are the most commonly used, and can be
- * passed as positional arguments or named arguments. Use what you prefer:
- * ```
- * // positional
- * val firstName = Descriptors.field("firstName", "the first name of the user")
- *
- * // named
- * val lastName = Descriptors.field(path = "firstName", description = "the first name of the user")
- * ```
+ * passed as positional arguments or named arguments. Use what you prefer:.
  *
  * The other arguments are optional, and intended to be used as named arguments, to improve readability and to
  * promote forward compatibility:
- * ```
- * // DON'T:
- * val address = Descriptors.subsection("address", "the address of the user", true)
  *
- * // DO:
- * val address = Descriptors.subsection("address", "the address of the user", optional = true)
- * val phone = Descriptors.field("phone", ignored = true)
- * ```
+ * @sample com.ninjasquad.springrestdocskotlin.core.descriptorsNameAndDescriptionArgumentsExample
+ * @sample com.ninjasquad.springrestdocskotlin.core.descriptorsOtherArgumentsDontExample
+ * @sample com.ninjasquad.springrestdocskotlin.core.descriptorsOtherArgumentsDoExample
  *
  * @author JB Nizet
  */

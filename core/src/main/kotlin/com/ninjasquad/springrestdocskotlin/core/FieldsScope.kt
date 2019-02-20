@@ -61,30 +61,34 @@ interface FieldsScope {
      * Adds all the field descriptors configured by the given `configure` block to the snippet being configured
      * after having prepended the given prefix to their path. This allows avoiding the repetition of a common
      * prefix, and show the tree structure of the fields. For example:
-     * ```
-     * val fields = Snippets.responseFields {
-     *     add("firstName", "the first name of the user")
-     *     add("lastName", "the last name of the user")
-     *     withPrefix("address.") {
-     *         add("city", "the city of the address of the user")
-     *         add("country", "the ISO country code of the address of the user")
-     *     }
-     * }
-     * ```
+     * @sample withPrefixExample
      *
      * which is equivalent to
      *
-     * ```
-     * val fields = Snippets.responseFields {
-     *     add("firstName", "the first name of the user")
-     *     add("lastName", "the last name of the user")
-     *     add("address.city", "the city of the address of the user")
-     *     add("address.country", "the ISO country code of the address of the user")
-     * }
-     * ```
+     * @sample withoutPrefixExample
      *
      * @param prefix the prefix to prepend to all the field descriptors added inside the scope of this function
      * @param configure a block taking a [FieldsScope] as receiver, allowing to add field descriptors
      */
     fun withPrefix(prefix: String, configure: FieldsScope.() -> Unit)
+}
+
+private fun withPrefixExample() {
+    val fields = Snippets.responseFields {
+        add("firstName", "the first name of the user")
+        add("lastName", "the last name of the user")
+        withPrefix("address.") {
+            add("city", "the city of the address of the user")
+            add("country", "the ISO country code of the address of the user")
+        }
+    }
+}
+
+private fun withoutPrefixExample() {
+    val fields = Snippets.responseFields {
+        add("firstName", "the first name of the user")
+        add("lastName", "the last name of the user")
+        add("address.city", "the city of the address of the user")
+        add("address.country", "the ISO country code of the address of the user")
+    }
 }
