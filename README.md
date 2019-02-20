@@ -4,12 +4,7 @@
 
 For the time being, this is an experimentation of a Kotlin-based DSL for [Spring-REST-Docs](https://spring.io/projects/spring-restdocs)
 
-A lot of tests are still missing, so there might be issues here and there, but I have some unit tests
-and integration tests passing already.
-
-There is no documentation yet, either.
-
-If you're interested, the main stuff is in the [core DSL file](core/src/main/kotlin/com.ninja_squad.springrestdocskotlin.core/dsl.kt). But to understand how the DSL looks like, you can
+If you're interested to understand how the DSL looks like, you can
 have a look at [the examples](examples/src/main/kotlin/com/ninja_squad/springrestdocskotlin/examples/core).
 
 ## Main goals
