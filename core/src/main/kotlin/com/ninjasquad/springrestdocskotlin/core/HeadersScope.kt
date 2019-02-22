@@ -5,6 +5,7 @@ import org.springframework.restdocs.headers.HeaderDescriptor
 /**
  * Receiver of the extension function used to add header descriptors to headers snippets
  */
+@RestDocumentationDslMarker
 interface HeadersScope {
 
     /**

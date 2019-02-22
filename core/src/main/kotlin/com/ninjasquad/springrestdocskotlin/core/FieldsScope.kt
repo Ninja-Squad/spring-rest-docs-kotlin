@@ -5,6 +5,7 @@ import org.springframework.restdocs.payload.FieldDescriptor
 /**
  * Receiver of the extension function used to add field descriptors to fields snippets
  */
+@RestDocumentationDslMarker
 interface FieldsScope {
 
     /**

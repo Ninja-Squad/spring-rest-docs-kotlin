@@ -12,6 +12,7 @@ import org.springframework.restdocs.snippet.Snippet
  * These extension functions are specific to the test framework (MockMvc, WebTestClient, RestAssured) chosen
  * to generate the documentation.
  */
+@RestDocumentationDslMarker
 interface DocumentationScope {
 
     /**

@@ -5,6 +5,7 @@ import org.springframework.restdocs.request.ParameterDescriptor
 /**
  * Receiver of the extension function used to add parameter descriptors to parameters snippets
  */
+@RestDocumentationDslMarker
 interface ParametersScope {
 
     /**

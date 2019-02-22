@@ -5,6 +5,7 @@ import org.springframework.restdocs.request.RequestPartDescriptor
 /**
  * Receiver of the extension function used to add request part descriptors to request parts snippets
  */
+@RestDocumentationDslMarker
 interface RequestPartsScope {
 
     /**

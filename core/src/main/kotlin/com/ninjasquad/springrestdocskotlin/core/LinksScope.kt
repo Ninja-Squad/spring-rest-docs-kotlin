@@ -5,6 +5,7 @@ import org.springframework.restdocs.hypermedia.LinkDescriptor
 /**
  * Receiver of the extension function used to add link descriptors to links snippets
  */
+@RestDocumentationDslMarker
 interface LinksScope {
 
     /**
