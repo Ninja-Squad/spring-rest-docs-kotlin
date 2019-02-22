@@ -31,7 +31,7 @@ class MockMvcExampleTest(val mockMvc: MockMvc) {
                 snippet(reusableHeadersSnippet)
 
                 pathParameters {
-                    add("userUd", "The ID of the user to get")
+                    add("userId", "The ID of the user to get")
                 }
 
                 responseFields {
