@@ -5,8 +5,6 @@ import com.ninjasquad.springrestdocskotlin.core.documentationScope
 import org.springframework.http.HttpMethod
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
-import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor
-import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.ResultHandler
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
@@ -138,7 +136,7 @@ fun ResultActions.andDocument(identifier: String, configure: DocumentationScope.
 private fun DocumentationScope.toResultHandler(): ResultHandler =
     MockMvcRestDocumentation.document(
         identifier,
-        requestPreprocessor ?: OperationRequestPreprocessor { request -> request },
-        responsePreprocessor ?: OperationResponsePreprocessor { response -> response },
+        requestPreprocessor,
+        responsePreprocessor,
         *snippets.toTypedArray()
     )

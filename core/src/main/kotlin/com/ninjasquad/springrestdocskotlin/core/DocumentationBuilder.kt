@@ -1,6 +1,8 @@
 package com.ninjasquad.springrestdocskotlin.core
 
 import org.springframework.restdocs.hypermedia.LinkExtractor
+import org.springframework.restdocs.operation.OperationRequest
+import org.springframework.restdocs.operation.OperationResponse
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
@@ -11,9 +13,9 @@ import org.springframework.restdocs.snippet.Snippet
  */
 internal class DocumentationBuilder(override val identifier: String) : DocumentationScope {
 
-    override var requestPreprocessor: OperationRequestPreprocessor? = null
+    override var requestPreprocessor: OperationRequestPreprocessor = identityRequestPreprocessor
 
-    override var responsePreprocessor: OperationResponsePreprocessor? = null
+    override var responsePreprocessor: OperationResponsePreprocessor = identityResponsePreprocessor
 
     private val mutableSnippets = mutableListOf<Snippet>()
 
@@ -96,6 +98,14 @@ internal class DocumentationBuilder(override val identifier: String) : Documenta
         attributes: Map<String, Any?>,
         configure: LinksScope.() -> Unit
     ) = snippet(Snippets.links(relaxed, linkExtractor, attributes, configure))
+
+    override fun preprocessRequest(configure: RequestPreprocessorScope.() -> Unit) {
+        requestPreprocessor = RequestPreprocessorBuilder().apply(configure).build()
+    }
+
+    override fun preprocessResponse(configure: ResponsePreprocessorScope.() -> Unit) {
+        responsePreprocessor = ResponsePreprocessorBuilder().apply(configure).build()
+    }
 }
 
 /**
@@ -110,3 +120,11 @@ internal class DocumentationBuilder(override val identifier: String) : Documenta
  */
 fun documentationScope(identifier: String): DocumentationScope
     = DocumentationBuilder(identifier)
+
+private object identityRequestPreprocessor: OperationRequestPreprocessor {
+    override fun preprocess(request: OperationRequest) = request
+}
+
+private object identityResponsePreprocessor: OperationResponsePreprocessor {
+    override fun preprocess(response: OperationResponse) = response
+}

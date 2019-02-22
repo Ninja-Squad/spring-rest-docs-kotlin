@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.RequestHeadersSnippet
 import org.springframework.restdocs.headers.ResponseHeadersSnippet
 import org.springframework.restdocs.hypermedia.HypermediaDocumentation
@@ -27,9 +28,12 @@ class DocumentationBuilderTests {
     }
 
     @Test
-    fun `should have no preprocessors by default`() {
-        assertThat(scope.requestPreprocessor).isNull()
-        assertThat(scope.responsePreprocessor).isNull()
+    fun `should have identity preprocessors by default`() {
+        val fakeRequest = fakeRequest()
+        val fakeResponse = fakeResponse()
+
+        assertThat(scope.requestPreprocessor.preprocess(fakeRequest)).isSameAs(fakeRequest)
+        assertThat(scope.responsePreprocessor.preprocess(fakeResponse)).isSameAs(fakeResponse)
     }
 
     @Test
@@ -47,6 +51,41 @@ class DocumentationBuilderTests {
 
         assertThat(scope.requestPreprocessor).isSameAs(requestPreprocessor)
         assertThat(scope.responsePreprocessor).isSameAs(responsePreprocessor)
+    }
+
+    @Test
+    fun `should preprocess request`() {
+        val inputRequest = fakeRequest(
+            content = "hello world!".toByteArray()
+        )
+        scope.preprocessRequest {
+            modifyParameters {
+                add("foo", "bar")
+            }
+            replaceRegex(Regex("w.*d"), "earth")
+        }
+
+        val preprocessedRequest = scope.requestPreprocessor.preprocess(inputRequest)
+
+        assertThat(preprocessedRequest.parameters).containsOnly(entry("foo", listOf("bar")))
+        assertThat(preprocessedRequest.contentAsString).isEqualTo("hello earth!")
+    }
+
+    @Test
+    fun `should preprocess response`() {
+        val inputResponse = fakeResponse(
+            content = "hello world!".toByteArray(),
+            headers = HttpHeaders().apply { contentType = MediaType.TEXT_PLAIN }
+        )
+        scope.preprocessResponse {
+            replaceRegex(Regex("w.*d"), "earth")
+            removeHeaders(HttpHeaders.CONTENT_TYPE)
+        }
+
+        val preprocessedResponse = scope.responsePreprocessor.preprocess(inputResponse)
+
+        assertThat(preprocessedResponse.headers).isEmpty()
+        assertThat(preprocessedResponse.contentAsString).isEqualTo("hello earth!")
     }
 
     @Test

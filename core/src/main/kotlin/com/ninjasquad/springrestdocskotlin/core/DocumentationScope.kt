@@ -21,16 +21,18 @@ interface DocumentationScope {
     val identifier: String
 
     /**
-     * Allows setting (and getting) a [request preprocessor][OperationRequestPreprocessor] used to modify the request
-     * prior to it being documented.
+     * The [request preprocessor][OperationRequestPreprocessor] used to modify the request
+     * prior to it being documented. Does nothing by default. Can be configured and set by calling
+     * [preprocessRequest]
      */
-    var requestPreprocessor: OperationRequestPreprocessor?
+    var requestPreprocessor: OperationRequestPreprocessor
 
     /**
-     * Allows setting (and getting) a [response preprocessor][OperationResponsePreprocessor] used to modify the request
-     * prior to it being documented.
+     * The [response preprocessor][OperationResponsePreprocessor] used to modify the response
+     * prior to it being documented. Can be configured and set by calling
+     * [preprocessRequest]
      */
-    var responsePreprocessor: OperationResponsePreprocessor?
+    var responsePreprocessor: OperationResponsePreprocessor
 
     /**
      * The list of snippets that have been added to the documentation
@@ -208,4 +210,18 @@ interface DocumentationScope {
         attributes: Map<String, Any?> = emptyMap(),
         configure: LinksScope.() -> Unit
     )
+
+    /**
+     * Allows configuring and combining [request preprocessors][OperationRequestPreprocessor] and setting
+     * the [requestPreprocessor] used to preprocess the request
+     * @param configure a block taking a [RequestPreprocessorScope] as receiver, allowing to add request preprocessors
+     */
+    fun preprocessRequest(configure: RequestPreprocessorScope.() -> Unit)
+
+    /**
+     * Allows configuring and combining [response preprocessors][OperationResponsePreprocessor] and setting
+     * the [responsePreprocessor] used to preprocess the request
+     * @param configure a block taking a [ResponsePreprocessorScope] as receiver, allowing to add response preprocessors
+     */
+    fun preprocessResponse(configure: ResponsePreprocessorScope.() -> Unit)
 }

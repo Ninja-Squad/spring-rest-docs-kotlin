@@ -2,8 +2,6 @@ package com.ninjasquad.springrestdocskotlin.webtestclient
 
 import com.ninjasquad.springrestdocskotlin.core.DocumentationScope
 import com.ninjasquad.springrestdocskotlin.core.documentationScope
-import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor
-import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation
 import org.springframework.test.web.reactive.server.ExchangeResult
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -29,7 +27,7 @@ fun WebTestClient.BodyContentSpec.andDocument(
 private fun <T : ExchangeResult> DocumentationScope.buildWebTestClient(): Consumer<T> =
     WebTestClientRestDocumentation.document(
         identifier,
-        requestPreprocessor ?: OperationRequestPreprocessor { request -> request },
-        responsePreprocessor ?: OperationResponsePreprocessor { response -> response },
+        requestPreprocessor,
+        responsePreprocessor,
         *snippets.toTypedArray()
     )
