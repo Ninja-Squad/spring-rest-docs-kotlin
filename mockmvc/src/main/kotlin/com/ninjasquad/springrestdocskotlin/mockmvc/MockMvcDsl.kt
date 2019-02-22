@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
  * @param urlVariables zero or more URL variables
  * @return the builder for the GET request
  */
-fun docGet(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docGet(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.get(urlTemplate, *urlVariables)
 
 /**
@@ -34,7 +34,7 @@ fun docGet(urlTemplate: String, vararg urlVariables: Any): MockHttpServletReques
  * @param urlVariables zero or more URL variables
  * @return the builder for the POST request
  */
-fun docPost(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docPost(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.post(urlTemplate, *urlVariables)
 
 /**
@@ -46,7 +46,7 @@ fun docPost(urlTemplate: String, vararg urlVariables: Any): MockHttpServletReque
  * @param urlVariables zero or more URL variables
  * @return the builder for the PUT request
  */
-fun docPut(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docPut(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.put(urlTemplate, *urlVariables)
 
 /**
@@ -58,7 +58,7 @@ fun docPut(urlTemplate: String, vararg urlVariables: Any): MockHttpServletReques
  * @param urlVariables zero or more URL variables
  * @return the builder for the DELETE request
  */
-fun docDelete(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docDelete(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.delete(urlTemplate, *urlVariables)
 
 /**
@@ -70,7 +70,7 @@ fun docDelete(urlTemplate: String, vararg urlVariables: Any): MockHttpServletReq
  * @param urlVariables zero or more URL variables
  * @return the builder for the HEAD request
  */
-fun docHead(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docHead(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.head(urlTemplate, *urlVariables)
 
 /**
@@ -82,7 +82,7 @@ fun docHead(urlTemplate: String, vararg urlVariables: Any): MockHttpServletReque
  * @param urlVariables zero or more URL variables
  * @return the builder for the POST request
  */
-fun docOptions(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docOptions(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.options(urlTemplate, *urlVariables)
 
 /**
@@ -94,7 +94,7 @@ fun docOptions(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRe
  * @param urlVariables zero or more URL variables
  * @return the builder for the PATCH request
  */
-fun docPatch(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docPatch(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.patch(urlTemplate, *urlVariables)
 
 /**
@@ -105,7 +105,7 @@ fun docPatch(urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequ
  * @param urlVariables zero or more URL variables
  * @return the builder for the file upload request
  */
-fun docFileUpload(urlTemplate: String, vararg urlVariables: Any): MockMultipartHttpServletRequestBuilder =
+fun docFileUpload(urlTemplate: String, vararg urlVariables: Any?): MockMultipartHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.fileUpload(urlTemplate, *urlVariables)
 
 /**
@@ -117,7 +117,7 @@ fun docFileUpload(urlTemplate: String, vararg urlVariables: Any): MockMultipartH
  * @param urlVariables zero or more URL variables
  * @return the builder for the request
  */
-fun docRequest(httpMethod: HttpMethod, urlTemplate: String, vararg urlVariables: Any): MockHttpServletRequestBuilder =
+fun docRequest(httpMethod: HttpMethod, urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequestBuilder =
     RestDocumentationRequestBuilders.request(httpMethod, urlTemplate, *urlVariables)
 
 /**
