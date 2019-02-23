@@ -5,6 +5,7 @@ import com.ninjasquad.springrestdocskotlin.core.documentationScope
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation
 import org.springframework.test.web.reactive.server.ExchangeResult
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.WebTestClient.BodyContentSpec
 import java.util.function.Consumer
 
 /**

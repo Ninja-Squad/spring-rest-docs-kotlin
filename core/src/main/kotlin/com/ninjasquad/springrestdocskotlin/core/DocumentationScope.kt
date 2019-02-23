@@ -1,6 +1,7 @@
 package com.ninjasquad.springrestdocskotlin.core
 
 import org.springframework.restdocs.hypermedia.LinkExtractor
+import org.springframework.restdocs.hypermedia.LinksSnippet
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
@@ -145,6 +146,7 @@ interface DocumentationScope {
 
     /**
      * Creates a new [org.springframework.restdocs.payload.RequestPartFieldsSnippet] and adds it to the documentation.
+     * @param part the name of the part
      * @param relaxed if true, undocumented fields present in the request part payload will be ignored. If false,
      * a failure will occur if undocumented fields are present in the request part payload.
      * @param subsectionExtractor an extractor allowing to document only a subsection of the actual payload. See
@@ -185,6 +187,7 @@ interface DocumentationScope {
 
     /**
      * Creates a new [org.springframework.restdocs.payload.RequestPartBodySnippet] and adds it to the documentation.
+     * @param part the name of the part
      * @param subsectionExtractor an extractor allowing to document only a subsection of the actual payload. See
      * [org.springframework.restdocs.payload.PayloadDocumentation.beneathPath]
      * @param attributes arbitrary additional attributes for the snippet
@@ -220,7 +223,7 @@ interface DocumentationScope {
 
     /**
      * Allows configuring and combining [response preprocessors][OperationResponsePreprocessor] and setting
-     * the [responsePreprocessor] used to preprocess the request
+     * the [responsePreprocessor] used to preprocess the response
      * @param configure a block taking a [ResponsePreprocessorScope] as receiver, allowing to add response preprocessors
      */
     fun preprocessResponse(configure: ResponsePreprocessorScope.() -> Unit)

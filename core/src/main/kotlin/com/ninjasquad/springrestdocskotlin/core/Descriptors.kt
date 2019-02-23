@@ -17,7 +17,7 @@ import org.springframework.restdocs.snippet.Attributes
  *
  * All methods take the `name`, `path` or `rel` of the descriptor to create (depending on the type) as first
  * argument, and the description as second argument. These two arguments are the most commonly used, and can be
- * passed as positional arguments or named arguments. Use what you prefer:.
+ * passed as positional arguments or named arguments. Use what you prefer.
  *
  * The other arguments are optional, and intended to be used as named arguments, to improve readability and to
  * promote forward compatibility:

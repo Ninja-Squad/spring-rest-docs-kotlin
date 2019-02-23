@@ -4,7 +4,7 @@ import org.springframework.restdocs.operation.preprocess.OperationPreprocessor
 import org.springframework.restdocs.operation.preprocess.UriModifyingOperationPreprocessor
 
 /**
- * Interface used as a reveiver of the extension functions used to configure request and response preprocessors
+ * Interface used as a receiver of the extension functions used to configure request and response preprocessors
  */
 @RestDocumentationDslMarker
 interface PreprocessorScope {

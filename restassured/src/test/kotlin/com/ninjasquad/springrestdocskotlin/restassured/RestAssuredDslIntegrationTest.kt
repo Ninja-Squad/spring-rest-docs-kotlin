@@ -30,7 +30,7 @@ open class UserController {
 }
 
 /**
- * Integration tests for the various docXxx extension methods and for andDocument
+ * Integration tests for the andDocument extension method
  * @author JB Nizet
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

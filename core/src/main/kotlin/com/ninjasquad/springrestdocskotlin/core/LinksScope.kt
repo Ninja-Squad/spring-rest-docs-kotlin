@@ -9,9 +9,10 @@ import org.springframework.restdocs.hypermedia.LinkDescriptor
 interface LinksScope {
 
     /**
-     * Creates a new header descriptor and adds it to the snippet being configured.
-     * @param name the name of the parameter
-     * @param description the description of the parameter. Optional if `ignored` is true
+     * Creates a new link descriptor and adds it to the snippet being configured.
+     * @param rel the rel of the link
+     * @param description the description of the link. Optional if `ignored` is true, or if the link has a `title`. In
+     * that case, the title will be used as the description
      * @param optional if true, marks the descriptor as optional
      * @param ignored if true, marks the descriptor as ignored, i.e. not included in the documentation
      * @param attributes arbitrary additional attributes for the descriptor

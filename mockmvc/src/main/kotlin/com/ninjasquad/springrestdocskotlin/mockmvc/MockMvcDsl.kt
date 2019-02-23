@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 
 /**
- * Create a [MockHttpServletRequestBuilder] for a GET request. The url template
+ * Create a [MockHttpServletRequestBuilder] for a GET request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.get] which avoids accidentally using
  * [MockMvcRequestBuilders.get].
@@ -24,7 +24,7 @@ fun docGet(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletReque
     RestDocumentationRequestBuilders.get(urlTemplate, *urlVariables)
 
 /**
- * Create a [MockHttpServletRequestBuilder] for a POST request. The url template
+ * Create a [MockHttpServletRequestBuilder] for a POST request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.post] which avoids accidentally using
  * [MockMvcRequestBuilders.post].
@@ -36,7 +36,7 @@ fun docPost(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequ
     RestDocumentationRequestBuilders.post(urlTemplate, *urlVariables)
 
 /**
- * Create a [MockHttpServletRequestBuilder] for a PUT request. The url template
+ * Create a [MockHttpServletRequestBuilder] for a PUT request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.put] which avoids accidentally using
  * [MockMvcRequestBuilders.put].
@@ -48,7 +48,7 @@ fun docPut(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletReque
     RestDocumentationRequestBuilders.put(urlTemplate, *urlVariables)
 
 /**
- * Create a [MockHttpServletRequestBuilder] for a DELETE request. The url template
+ * Create a [MockHttpServletRequestBuilder] for a DELETE request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.delete] which avoids accidentally using
  * [MockMvcRequestBuilders.delete].
@@ -60,7 +60,7 @@ fun docDelete(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRe
     RestDocumentationRequestBuilders.delete(urlTemplate, *urlVariables)
 
 /**
- * Create a [MockHttpServletRequestBuilder] for a HEAD request. The url template
+ * Create a [MockHttpServletRequestBuilder] for a HEAD request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.head] which avoids accidentally using
  * [MockMvcRequestBuilders.head].
@@ -72,10 +72,10 @@ fun docHead(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletRequ
     RestDocumentationRequestBuilders.head(urlTemplate, *urlVariables)
 
 /**
- * Create a [MockHttpServletRequestBuilder] for an OPTIONS request. The url template
+ * Create a [MockHttpServletRequestBuilder] for an OPTIONS request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.options] which avoids accidentally using
- * [MockMvcRequestBuilders.option].
+ * [MockMvcRequestBuilders.options].
  * @param urlTemplate a URL template; the resulting URL will be encoded
  * @param urlVariables zero or more URL variables
  * @return the builder for the POST request
@@ -84,7 +84,7 @@ fun docOptions(urlTemplate: String, vararg urlVariables: Any?): MockHttpServletR
     RestDocumentationRequestBuilders.options(urlTemplate, *urlVariables)
 
 /**
- * Create a [MockHttpServletRequestBuilder] for a PATCH request. The url template
+ * Create a [MockHttpServletRequestBuilder] for a PATCH request. The URL template
  * will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.patch] which avoids accidentally using
  * [MockMvcRequestBuilders.patch].
@@ -108,7 +108,7 @@ fun docFileUpload(urlTemplate: String, vararg urlVariables: Any?): MockMultipart
 
 /**
  * Create a [MockHttpServletRequestBuilder] for a request with the given HTTP
- * method. The url template will be captured and made available for documentation.
+ * method. The URL template will be captured and made available for documentation.
  * This is an alias for [RestDocumentationRequestBuilders.request].
  * @param httpMethod the HTTP method
  * @param urlTemplate a URL template; the resulting URL will be encoded

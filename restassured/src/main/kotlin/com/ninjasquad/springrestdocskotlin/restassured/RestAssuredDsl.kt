@@ -7,7 +7,7 @@ import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation
 import org.springframework.restdocs.restassured3.RestDocumentationFilter
 
 /**
- * Adds a filer to the [RequestSpecification], which allows documenting the request and its response.
+ * Adds a filter to the [RequestSpecification], which allows documenting the request and its response.
  *
  * Example usage:
  * @sample com.ninjasquad.springrestdocskotlin.restassured.andDocumentExample

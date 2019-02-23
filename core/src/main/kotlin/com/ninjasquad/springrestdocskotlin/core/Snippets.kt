@@ -141,6 +141,7 @@ object Snippets {
 
     /**
      * Creates a new reusable [RequestPartFieldsSnippet] describing the fields in a part of a multipart request.
+     * @param part the name of the part
      * @param relaxed if true, undocumented fields present in the request part payload will be ignored. If false,
      * a failure will occur if undocumented fields are present in the request part payload.
      * @param subsectionExtractor an extractor allowing to document only a subsection of the actual payload. See
@@ -186,6 +187,7 @@ object Snippets {
 
     /**
      * Creates a new reusable [RequestPartBodySnippet] describing the body of a part of a multipart request.
+     * @param part the name of the part
      * @param subsectionExtractor an extractor allowing to document only a subsection of the actual payload. See
      * [org.springframework.restdocs.payload.PayloadDocumentation.beneathPath]
      * @param attributes arbitrary additional attributes for the snippet
