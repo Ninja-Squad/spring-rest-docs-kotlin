@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_VARIABLE", "unused")
+
 package com.ninjasquad.springrestdocskotlin.core
 
 private fun descriptorsNameAndDescriptionArgumentsExample() {
