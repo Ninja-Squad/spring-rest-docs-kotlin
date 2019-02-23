@@ -17,3 +17,24 @@ private fun descriptorsOtherArgumentsDoExample() {
     val address = Descriptors.subsection("address", "the address of the user", optional = true)
     val phone = Descriptors.field("phone", ignored = true)
 }
+
+
+private fun withPrefixExample() {
+    val fields = Snippets.responseFields {
+        add("firstName", "the first name of the user")
+        add("lastName", "the last name of the user")
+        withPrefix("address.") {
+            add("city", "the city of the address of the user")
+            add("country", "the ISO country code of the address of the user")
+        }
+    }
+}
+
+private fun withoutPrefixExample() {
+    val fields = Snippets.responseFields {
+        add("firstName", "the first name of the user")
+        add("lastName", "the last name of the user")
+        add("address.city", "the city of the address of the user")
+        add("address.country", "the ISO country code of the address of the user")
+    }
+}
