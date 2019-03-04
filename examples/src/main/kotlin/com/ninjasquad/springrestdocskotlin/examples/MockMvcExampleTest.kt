@@ -5,7 +5,6 @@ import com.ninjasquad.springrestdocskotlin.mockmvc.andDocument
 import com.ninjasquad.springrestdocskotlin.mockmvc.docGet
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 /**
  * Example test code using MockMVC (annotations are missing: this is not a real test)
@@ -22,9 +21,9 @@ class MockMvcExampleTest(val mockMvc: MockMvc) {
     fun `should get user`() {
         // using docGet makes sure you don't accidentally import `MockMvcRequestBuilder.get`instead of
         // `RestDocumentationRequestBuilders.get`
-        mockMvc.perform(docGet("/users/{userId}", 42L))
-            .andExpect(status().isOk)
-            // andDocument is easier to type and read than andDo(document(...))
+        mockMvc.docGet("/users/{userId}", 42L)
+            .andExpect { status { isOk } }
+            // andDocument is easier to type and read than andDo { document(...) }
             // and it takes a DocumentationScope extension function as argument, providing
             // easy, scoped access to several methods (snippet, requestParameters, etc.)
             .andDocument("users/get") {

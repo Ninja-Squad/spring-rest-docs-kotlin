@@ -6,7 +6,6 @@ import com.ninjasquad.springrestdocskotlin.core.ParametersScope
 import com.ninjasquad.springrestdocskotlin.mockmvc.andDocument
 import com.ninjasquad.springrestdocskotlin.mockmvc.docGet
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 fun DocumentationScope.pageRequestParameters(configure: ParametersScope.() -> Unit) {
     requestParameters {
@@ -37,9 +36,12 @@ class PaginationExampleTest(val mockMvc: MockMvc) {
     fun `should search users`() {
         // using docGet makes sure you don't accidentally import `MockMvcRequestBuilder.get`instead of
         // `RestDocumentationRequestBuilders.get`
-        mockMvc.perform(docGet("/users").param("query", "john").param("page", "1"))
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            // andDocument is easier to type and read than andDo(document(...))
+        mockMvc.docGet("/users") {
+            param("query", "john")
+            param("page", "1")
+        }
+            .andExpect { status { isOk } }
+            // andDocument is easier to type and read than andDo { document(...) }
             // and it takes a DocumentationScope extension function as argument, providing
             // easy, scoped access to several methods (snippet, requestParameters, etc.)
             .andDocument("users/search") {

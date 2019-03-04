@@ -17,8 +17,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentati
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.ResultActionsDsl
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder
 import org.springframework.web.bind.annotation.GetMapping
@@ -52,14 +51,16 @@ class MockMvcDslIntegrationTest {
     fun setUp(restDocumentation: RestDocumentationContextProvider) {
         this.mockMvc = MockMvcBuilders.standaloneSetup(UserController())
             .apply<StandaloneMockMvcBuilder>(documentationConfiguration(restDocumentation))
-            .build();
+            .build()
     }
 
     @Test
     fun `should get user without preprocessors`() {
-        mockMvc.perform(docGet("/users/{userId}", 42))
-            .andExpect(status().isOk)
-            .andDocument("users/get") {
+        mockMvc.docGet("/users/{userId}", 42)
+            .andDo { print() }
+            .andExpect {
+                status { isOk }
+            }.andDocument("users/get") {
                 pathParameters {
                     add("userId", "the ID of the user to get")
                 }
@@ -94,9 +95,10 @@ class MockMvcDslIntegrationTest {
             response
         }
 
-        mockMvc.perform(docGet("/users/{userId}", 42))
-            .andExpect(status().isOk)
-            .andDocument("users/get-with-preprocessors") {
+        mockMvc.docGet("/users/{userId}", 42)
+            .andExpect {
+                status { isOk }
+            }.andDocument("users/get-with-preprocessors") {
                 requestPreprocessor = fakeRequestPreprocessor
                 responsePreprocessor = fakeResponsePreprocessor
             }
@@ -110,24 +112,23 @@ class MockMvcDslIntegrationTest {
     fun otherRequestMethodsArguments(): List<Arguments> {
         val uri = "/users/42"
         return listOf(
-            arguments("Post", docPost(uri), HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Put", docPut(uri), HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Delete", docDelete(uri), HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Options", docOptions(uri), HttpStatus.OK),
-            arguments("Head", docHead(uri), HttpStatus.OK),
-            arguments("Patch", docPatch(uri), HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("FileUpload", docFileUpload(uri), HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Request", docRequest(HttpMethod.POST, uri), HttpStatus.METHOD_NOT_ALLOWED)
+            arguments("Post", { mockMvc.docPost(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
+            arguments("Put", { mockMvc.docPut(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
+            arguments("Delete", { mockMvc.docDelete(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
+            arguments("Options", { mockMvc.docOptions(uri) }, HttpStatus.OK),
+            arguments("Head", { mockMvc.docHead(uri) }, HttpStatus.OK),
+            arguments("Patch", { mockMvc.docPatch(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
+            arguments("Multipart", { mockMvc.docMultipart(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
+            arguments("Request", { mockMvc.docRequest(HttpMethod.POST, uri) }, HttpStatus.METHOD_NOT_ALLOWED)
         )
     }
 
     @ParameterizedTest(name = "doc{0}")
     @MethodSource("otherRequestMethodsArguments")
-    fun `should support other methods`(method: String, mockHttpServletRequestBuilder: MockHttpServletRequestBuilder, expectedStatus: HttpStatus) {
-        mockMvc.perform(mockHttpServletRequestBuilder)
-            .andExpect(status().`is`(expectedStatus.value()))
-            .andDocument("users/${method.toLowerCase()}") {
-            }
+    fun `should support other methods`(method: String, request: () -> ResultActionsDsl, expectedStatus: HttpStatus) {
+        request().andExpect {
+            status { `is`(expectedStatus.value()) }
+        }.andDocument("users/${method.toLowerCase()}") { }
 
         val requestFile = File("build/generated-snippets/users/${method.toLowerCase()}/http-request.adoc")
         assertThat(requestFile).exists()
