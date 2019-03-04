@@ -6,7 +6,6 @@ plugins {
     base
     kotlin("jvm") version kotlinVersion apply false
     id("org.jetbrains.dokka") version "0.9.17"
-    id("org.springframework.boot") version "2.1.2.RELEASE" apply false
 }
 
 version = "1.0.0-SNAPSHOT"
@@ -25,12 +24,13 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven(url = uri("https://repo.spring.io/snapshot"))
     }
 
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable")
+                freeCompilerArgs = listOf("-Xjsr305=strict")
                 jvmTarget = "1.8"
             }
         }
@@ -41,15 +41,12 @@ subprojects {
     }
 
     dependencies {
-        "implementation"(platform("org.springframework.boot:spring-boot-dependencies:2.1.2.RELEASE"))
+        "implementation"(platform("org.springframework:spring-framework-bom:5.2.0.BUILD-SNAPSHOT"))
         "implementation"("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-        "testImplementation"("org.junit.jupiter:junit-jupiter-api")
-        "testImplementation"("org.junit.jupiter:junit-jupiter-params")
-        "testImplementation"("org.assertj:assertj-core")
+        "testImplementation"("org.junit.jupiter:junit-jupiter:5.4.0")
+        "testImplementation"("org.assertj:assertj-core:3.11.1")
         "testImplementation"("org.jetbrains.kotlin:kotlin-reflect")
-
-        "testRuntimeOnly"("org.junit.jupiter:junit-jupiter-engine")
     }
 }
 

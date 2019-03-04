@@ -1,9 +1,7 @@
 dependencies {
     api(project(":core"))
-    api("org.springframework.restdocs:spring-restdocs-restassured")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-web")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(module = "junit")
-    }
+    implementation("org.springframework:spring-webmvc")
+    testImplementation("org.springframework:spring-test")
+    testImplementation("org.apache.tomcat.embed:tomcat-embed-core:8.5.13")
+    api("org.springframework.restdocs:spring-restdocs-restassured:2.0.4.BUILD-SNAPSHOT")
 }

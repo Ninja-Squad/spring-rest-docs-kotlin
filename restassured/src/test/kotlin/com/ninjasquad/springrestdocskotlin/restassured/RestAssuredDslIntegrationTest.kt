@@ -1,25 +1,26 @@
 package com.ninjasquad.springrestdocskotlin.restassured
 
 import io.restassured.RestAssured.given
+import io.restassured.builder.RequestSpecBuilder
 import io.restassured.specification.RequestSpecification
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration
+import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.io.File
 
+
 data class User(val id: Long, val firstName: String, val lastName: String)
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/users")
 open class UserController {
@@ -33,18 +34,30 @@ open class UserController {
  * Integration tests for the andDocument extension method
  * @author JB Nizet
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(RestDocumentationExtension::class)
-@AutoConfigureRestDocs
-class RestAssuredDslIntegrationTest(
-    @LocalServerPort private val port: Int,
-    @Autowired private val documentationSpec: RequestSpecification
-) {
+@WebAppConfiguration
+class RestAssuredDslIntegrationTest {
+
+    private lateinit var documentationSpec: RequestSpecification
+    private lateinit var tomcatServer: TomcatServer;
+
+    @BeforeEach
+    fun setUp(restDocumentation: RestDocumentationContextProvider) {
+        this.tomcatServer = TomcatServer().apply { start() }
+        this.documentationSpec = RequestSpecBuilder()
+            .addFilter(documentationConfiguration(restDocumentation))
+            .build()
+    }
+
+    @AfterEach
+    fun tearDown() {
+        this.tomcatServer.stop()
+    }
 
     @Test
     fun `should get user without preprocessors`() {
         given(documentationSpec)
-            .port(port)
+            .port(tomcatServer.port)
             .andDocument("users/get") {
                 pathParameters {
                     add("userId", "the ID of the user to get")

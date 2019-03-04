@@ -1,23 +1,26 @@
 package com.ninjasquad.springrestdocskotlin.webtestclient
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.reactive.function.BodyInserters.fromObject
+import org.springframework.web.reactive.function.server.HandlerFunction
+import org.springframework.web.reactive.function.server.RequestPredicates.GET
+import org.springframework.web.reactive.function.server.RouterFunctions.route
+import org.springframework.web.reactive.function.server.ServerResponse
 import java.io.File
 
 data class User(val id: Long, val firstName: String, val lastName: String)
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/users")
 open class UserController {
@@ -31,14 +34,25 @@ open class UserController {
  * Integration tests for the andDocument extension method
  * @author JB Nizet
  */
-@WebFluxTest
 @ExtendWith(RestDocumentationExtension::class)
-@AutoConfigureRestDocs
-class WebTestClientDslIntegrationTest(@Autowired private val webClient: WebTestClient) {
+class WebTestClientDslIntegrationTest {
+
+    private lateinit var webTestClient: WebTestClient
+
+    @BeforeEach
+    fun setUp(restDocumentation: RestDocumentationContextProvider) {
+        val route = route(
+            GET("/users/{userId}"),
+            HandlerFunction { _ -> ServerResponse.ok().body(fromObject(User(42L, "John", "Doe"))) }
+        )
+
+        this.webTestClient = WebTestClient.bindToRouterFunction(route).configureClient()
+            .filter(documentationConfiguration(restDocumentation)).build()
+    }
 
     @Test
     fun `should get user`() {
-        this.webClient.get()
+        this.webTestClient.get()
             .uri("/users/{userId}", 42)
             .exchange()
             .expectStatus().isOk()
