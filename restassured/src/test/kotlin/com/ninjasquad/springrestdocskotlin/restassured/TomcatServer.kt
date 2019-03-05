@@ -1,7 +1,6 @@
 package com.ninjasquad.springrestdocskotlin.restassured
 
 import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.catalina.LifecycleException
 import org.apache.catalina.startup.Tomcat
 import java.io.IOException
@@ -11,18 +10,17 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-internal class TomcatServer {
+internal class TomcatServer(private val jsonResponse: String) {
 
     private val tomcat: Tomcat = Tomcat()
 
     var port: Int = 0
         private set
 
-    @Throws(LifecycleException::class)
     fun start() {
         this.tomcat.connector.port = 0
         val context = this.tomcat.addContext("/", null)
-        this.tomcat.addServlet("/", "test", TestServlet())
+        this.tomcat.addServlet("/", "test", TestServlet(jsonResponse))
         context.addServletMappingDecoded("/", "test")
         this.tomcat.start()
         this.port = this.tomcat.connector.localPort
@@ -39,7 +37,7 @@ internal class TomcatServer {
     /**
      * [HttpServlet] used to handle requests in the tests.
      */
-    private class TestServlet : HttpServlet() {
+    private class TestServlet(private val jsonResponse: String) : HttpServlet() {
 
         @Throws(ServletException::class, IOException::class)
         override fun doGet(request: HttpServletRequest, response: HttpServletResponse) {
@@ -54,7 +52,7 @@ internal class TomcatServer {
             content["id"] = 42L
             content["firstName"] = "John"
             content["lastName"] = "Doe"
-            response.writer.println(ObjectMapper().writeValueAsString(content))
+            response.writer.println(jsonResponse)
             response.flushBuffer()
         }
 

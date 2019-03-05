@@ -1,5 +1,6 @@
 package com.ninjasquad.springrestdocskotlin.restassured
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured.given
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.specification.RequestSpecification
@@ -12,23 +13,9 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 import java.io.File
 
-
 data class User(val id: Long, val firstName: String, val lastName: String)
-
-@RestController
-@RequestMapping("/users")
-open class UserController {
-    @GetMapping("/{userId}")
-    fun get(@PathVariable userId: Long): User {
-        return User(userId, "John", "Doe")
-    }
-}
 
 /**
  * Integration tests for the andDocument extension method
@@ -41,9 +28,11 @@ class RestAssuredDslIntegrationTest {
     private lateinit var documentationSpec: RequestSpecification
     private lateinit var tomcatServer: TomcatServer;
 
+    private val user = User(42, "John", "Doe")
+
     @BeforeEach
     fun setUp(restDocumentation: RestDocumentationContextProvider) {
-        this.tomcatServer = TomcatServer().apply { start() }
+        this.tomcatServer = TomcatServer(jsonResponse = ObjectMapper().writeValueAsString(user)).apply { start() }
         this.documentationSpec = RequestSpecBuilder()
             .addFilter(documentationConfiguration(restDocumentation))
             .build()
@@ -69,7 +58,7 @@ class RestAssuredDslIntegrationTest {
                     add("lastName", ignored = true)
                 }
             }
-            .get("/users/{userId}", 42)
+            .get("/users/{userId}", user.id)
             .then().statusCode(200)
 
         val pathParametersFile = File("build/generated-snippets/users/get/path-parameters.adoc")
