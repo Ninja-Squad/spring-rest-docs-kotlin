@@ -112,25 +112,25 @@ class MockMvcDslIntegrationTest {
     fun otherRequestMethodsArguments(): List<Arguments> {
         val uri = "/users/42"
         return listOf(
-            arguments("Post", { mockMvc.docPost(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Put", { mockMvc.docPut(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Delete", { mockMvc.docDelete(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Options", { mockMvc.docOptions(uri) }, HttpStatus.OK),
-            arguments("Head", { mockMvc.docHead(uri) }, HttpStatus.OK),
-            arguments("Patch", { mockMvc.docPatch(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Multipart", { mockMvc.docMultipart(uri) }, HttpStatus.METHOD_NOT_ALLOWED),
-            arguments("Request", { mockMvc.docRequest(HttpMethod.POST, uri) }, HttpStatus.METHOD_NOT_ALLOWED)
+            arguments("post", HttpStatus.METHOD_NOT_ALLOWED, { mockMvc.docPost(uri) }),
+            arguments("put", HttpStatus.METHOD_NOT_ALLOWED, { mockMvc.docPut(uri) }),
+            arguments("delete", HttpStatus.METHOD_NOT_ALLOWED, { mockMvc.docDelete(uri) }),
+            arguments("options", HttpStatus.OK, { mockMvc.docOptions(uri) }),
+            arguments("head", HttpStatus.OK, { mockMvc.docHead(uri) }),
+            arguments("patch", HttpStatus.METHOD_NOT_ALLOWED, { mockMvc.docPatch(uri) }),
+            arguments("multipart", HttpStatus.METHOD_NOT_ALLOWED, { mockMvc.docMultipart(uri) }),
+            arguments("request", HttpStatus.METHOD_NOT_ALLOWED, { mockMvc.docRequest(HttpMethod.POST, uri) })
         )
     }
 
     @ParameterizedTest(name = "doc{0}")
     @MethodSource("otherRequestMethodsArguments")
-    fun `should support other methods`(method: String, request: () -> ResultActionsDsl, expectedStatus: HttpStatus) {
+    fun `should support other methods`(method: String, expectedStatus: HttpStatus, request: () -> ResultActionsDsl) {
         request().andExpect {
             status { `is`(expectedStatus.value()) }
-        }.andDocument("users/${method.toLowerCase()}") { }
+        }.andDocument("users/$method") { }
 
-        val requestFile = File("build/generated-snippets/users/${method.toLowerCase()}/http-request.adoc")
+        val requestFile = File("build/generated-snippets/users/$method/http-request.adoc")
         assertThat(requestFile).exists()
     }
 }

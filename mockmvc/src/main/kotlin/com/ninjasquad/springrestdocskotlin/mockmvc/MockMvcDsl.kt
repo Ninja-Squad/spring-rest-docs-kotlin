@@ -96,8 +96,7 @@ fun MockMvc.docHead(
     vararg urlVariables: Any?,
     dsl: MockHttpServletRequestDsl.() -> Unit = {}
 ): ResultActionsDsl {
-    // TODO use head() when it's available
-    return request(HttpMethod.HEAD, urlTemplate, *urlVariables) {
+    return head(urlTemplate, *urlVariables) {
         requestAttr(RestDocumentationGenerator.ATTRIBUTE_NAME_URL_TEMPLATE, urlTemplate);
         dsl()
     }
